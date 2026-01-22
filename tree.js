@@ -102,18 +102,17 @@ export class Tree {
     */
 
     find(value, root=this.root) { 
+      
       // if node.value === value then return node
-      if ( root.value === value) return root
+      if ( root.value === value) return root;
       // if value < root
-      if ( value < root ) {
+      if ( value < root.value ) {
         root.left = this.find(value, root.left)
       } else {
         root.right = this.find(value, root.right)
       }
-      // go left
-      // else
-      // go right
-      return root;
+      
+      return root
     }
 
     /*

@@ -7,6 +7,6 @@ tree.buildTree(array);
 const root = tree.root
 
 
-const node = tree.find(3)
+const node = tree.find(67)
 console.log(node)
 
