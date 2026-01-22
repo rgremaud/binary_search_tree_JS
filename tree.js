@@ -57,7 +57,7 @@ export class Tree {
 
     return root
   }
-  // works for 0 and 1 children nodes
+
   deleteItem(value, root = this.root) {
     if (root === null) {
       return root;
@@ -76,19 +76,18 @@ export class Tree {
         return root.left
       }
 
-      // node w/2 children
+      // node w/2 children 
       const successor = this.getSuccessor(root);
+
       root.value = successor.value;
-      root.right = this.deleteItem(root.right, successor.value);
+      root.right = this.deleteItem(successor.value, root.right);
     }
 
     return root
   }
 
-  // pulls inorder successor - the smallest value in the right subtree aka the next highest value from removed node
-  // doesnt work
   getSuccessor(node) {
-    let currentNode = node.right
+    let currentNode = node.right;
 
     while (currentNode !== null && currentNode.left !== null) {
       currentNode = currentNode.left
@@ -96,10 +95,6 @@ export class Tree {
 
     return currentNode;
   }
-
-  /*
-  Write a find(value) function that returns the node with the given value.
-  */
 
   find(value, root = this.root) {
     // exit condition if value not found
@@ -117,12 +112,6 @@ export class Tree {
 
     return root
   }
-  /*
-    value=67, root = 8
-
-    root.right = 
-
-  */
 
   /*
   Write a levelOrderForEach(callback) function that accepts a callback function as

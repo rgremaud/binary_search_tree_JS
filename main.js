@@ -6,7 +6,14 @@ tree.buildTree(array);
 
 const root = tree.root
 
+tree.prettyPrint(root)
 
-const node = tree.find(4)
-console.log(node)
+tree.deleteItem(8)
+
+const root2 = tree.root
+
+tree.prettyPrint(root2)
+
+// const node = tree.find(4)
+// console.log(node)
 
