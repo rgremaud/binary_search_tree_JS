@@ -1,9 +1,5 @@
 import { Node } from "./node.js"
-/*
-Build a Tree class/factory which accepts an array when initialized. The Tree 
-class should have a root attribute, which uses the return value of buildTree 
-which you’ll write next.
-*/
+
 export class Tree {
     constructor(array) {
         this.array = this.trimArray(array);
@@ -48,35 +44,79 @@ export class Tree {
         }
     };
 
-    /*
-    Write insert(value) and deleteItem(value) functions that insert/delete the given
-     value. You’ll have to deal with several cases for delete, such as when a node 
-     has children or not. If you need additional resources, check out these two 
-     articles on inserting and deleting, or this video on BST inserting/removing 
-     with several visual examples.
+    insert(value, root=this.root) {
+        if ( root === null ) {
+          return root = new Node(value);
+        }
+        
+        if ( value < root.value ) {
+          root.left = this.insert(value, root.left)
+        } else {
+          root.right = this.insert(value, root.right)
+        }
 
-     */
+        return root
+    }
+    // works for 0 and 1 children nodes
+    deleteItem(value, root=this.root) {
+      if ( root === null ) {
+        return root;
+      }
 
-    insert(value) {
-        /*
-            const node = this.root
-            if key is smaller go left
-            else if key is larger go right
-            continue until you find an unoccupied spot that allows insertion as a new leaf w/o violating BST property 
-        */
-        const node = this.root;
+      if ( value < root.value ) {
+        root.left = this.deleteItem(value, root.left);
+      } else if ( value > root.value ) {
+        root.right = this.deleteItem(value, root.right);
+      } else {
+        // Leaf node or 1 child
+        if ( root.left === null ) { 
+          return root.right
+        }
+        if ( root.right === null ) {
+          return root.left
+        }
 
-        const newNode = new Node(value);
-
+        // node w/2 children
+        const successor = this.getSuccessor(root);
+        root.value = successor.value;
+        root.right = this.deleteItem(root.right, successor.value);
+      }
+      
+      return root
     }
 
-    deleteItem(value) {
+    // pulls inorder successor - the smallest value in the right subtree aka the next highest value from removed node
+    // doesnt work
+    getSuccessor(node) {
+      let currentNode = node.right
 
+      while (currentNode !== null && currentNode.left !== null) { 
+        currentNode = currentNode.left
+      }
+
+      return currentNode;
     }
 
     /*
     Write a find(value) function that returns the node with the given value.
-    
+    */
+
+    find(value, root=this.root) { 
+      // if node.value === value then return node
+      if ( root.value === value) return root
+      // if value < root
+      if ( value < root ) {
+        root.left = this.find(value, root.left)
+      } else {
+        root.right = this.find(value, root.right)
+      }
+      // go left
+      // else
+      // go right
+      return root;
+    }
+
+    /*
     Write a levelOrderForEach(callback) function that accepts a callback function as
      its parameter. levelOrderForEach should traverse the tree in breadth-first level
     order and call the callback on each node as it traverses, passing the whole node
