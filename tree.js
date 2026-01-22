@@ -121,7 +121,28 @@ export class Tree {
   levelOrderForEach may be implemented using either iteration or recursion 
   (try implementing both!). If no callback function is provided, throw an Error
   reporting that a callback is required. 
-  
+  */
+
+  levelOrderForEach(callback) {
+    /*
+    Set up a queue with first in first out
+    take node from front of queue, visit it and then queue is children (left first then right)
+    if root === null return
+
+    write a queue function
+
+    push root into queue
+
+    while queue is not empty
+      current node = front of queue
+      print the value of current node into your call back
+      if currentNode.left !== null -> push that node into queue
+      if currentNode.right !== null -> push that node into queue
+      pop current node from queue
+    */
+  }
+
+  /*
   Write inOrderForEach(callback), preOrderForEach(callback), and postOrderForEach(callback) 
   functions that also accept a callback as a parameter. Each of these functions 
   should traverse the tree in their respective depth-first order and pass each node
