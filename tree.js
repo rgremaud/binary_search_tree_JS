@@ -124,22 +124,33 @@ export class Tree {
   */
 
   levelOrderForEach(callback) {
-    /*
-    Set up a queue with first in first out
-    take node from front of queue, visit it and then queue is children (left first then right)
-    if root === null return
+    if (typeof callback !== 'function') {
+      throw new Error("Callback function required as input");
+    }
 
-    write a queue function
+    const levelOrderArray = [];
+    const queue = [];
+    
+    let currentNode = this.root;
+    queue.push(currentNode);
 
-    push root into queue
+    while ( queue.length !== 0 ) {
+      callback(currentNode.value, levelOrderArray)
+      if (currentNode.left !== null) {
+        queue.push(currentNode.left)
+      }
+      if (currentNode.right !== null) {
+        queue.push(currentNode.right)
+      }
+      queue.splice(0,1);
+      currentNode = queue[0];
+    }
+   
+    return levelOrderArray;
+  }
 
-    while queue is not empty
-      current node = front of queue
-      print the value of current node into your call back
-      if currentNode.left !== null -> push that node into queue
-      if currentNode.right !== null -> push that node into queue
-      pop current node from queue
-    */
+  storeValue(value, array) {
+    array.push(value);
   }
 
   /*
@@ -148,7 +159,9 @@ export class Tree {
   should traverse the tree in their respective depth-first order and pass each node
    to the provided callback. The functions should throw an Error if no callback is given as an argument, 
    like with levelOrderForEach.
+   */
   
+   /*
    Write a height(value) function that returns the height of the node containing 
    the given value. Height is defined as the number of edges in the longest path from 
    that node to a leaf node. If the value is not found in the tree, the function should return null.
