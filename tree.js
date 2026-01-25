@@ -113,16 +113,6 @@ export class Tree {
     return root
   }
 
-  /*
-  Write a levelOrderForEach(callback) function that accepts a callback function as
-   its parameter. levelOrderForEach should traverse the tree in breadth-first level
-  order and call the callback on each node as it traverses, passing the whole node
-  as an argument, similarly to how Array.prototype.forEach might work for arrays. 
-  levelOrderForEach may be implemented using either iteration or recursion 
-  (try implementing both!). If no callback function is provided, throw an Error
-  reporting that a callback is required. 
-  */
-
   levelOrderForEach(callback) {
     if (typeof callback !== 'function') {
       throw new Error("Callback function required as input");
@@ -165,12 +155,42 @@ export class Tree {
    Write a height(value) function that returns the height of the node containing 
    the given value. Height is defined as the number of edges in the longest path from 
    that node to a leaf node. If the value is not found in the tree, the function should return null.
-  
-  
+  */
+ // works for leaf nodes and nothing else
+  height(root, value) {
+    // returns null if value is not found in tree
+    if (this.find(value) === null) return null
+
+    // define node
+    let height = { value: -1 };
+    height = this.heightHelper(root, value, height);
+
+    return height.value;
+  }
+
+  heightHelper(root, value, height) {
+    if (!root) return -1;
+
+    // Find max height of left and right subtrees
+    let leftHeight = this.heightHelper(root.left, value, height);
+    let rightHeight = this.heightHelper(root.right, value, height);
+
+    let maxHeight = Math.max(leftHeight, rightHeight) + 1;
+
+    if (root.value === value) { 
+      height.value = maxHeight;
+    }
+
+    return maxHeight;
+  }
+
+   /*
    Write a depth(value) function that returns the depth of the node containing the 
    given value. Depth is defined as the number of edges in the path from that node 
    to the root node. If the value is not found in the tree, the function should return null.
-  
+  */
+
+   /*
    Write an isBalanced function that checks if the tree is balanced. A binary tree is 
    considered balanced if, for every node in the tree, the height difference between its 
    left and right subtrees is no more than 1, and both the left and right subtrees are also balanced.
