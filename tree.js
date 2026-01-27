@@ -150,15 +150,28 @@ export class Tree {
    to the provided callback. The functions should throw an Error if no callback is given as an argument, 
    like with levelOrderForEach.
    */
+  inOrderForEach(callback) {
+    if (typeof callback !== 'function') {
+      throw new Error("Callback function required as input");
+    }
 
-  /*
-  Write a height(value) function that returns the height of the node containing 
-  the given value. Height is defined as the number of edges in the longest path from 
-  that node to a leaf node. If the value is not found in the tree, the function should return null.
- */
+  }
 
-  // function works for height of actual tree - not individual nodes
-  heightTree(root = this.root, value = "") {
+  preOrderForEach(callback) {
+    if (typeof callback !== 'function') {
+      throw new Error("Callback function required as input");
+    }
+
+  }
+
+  postOrderForEach(callback) {
+    if (typeof callback !== 'function') {
+      throw new Error("Callback function required as input");
+    }
+    
+  }
+
+  heightHelper(root = this.root) {
     if (root === null) {
       return -1;
     }
@@ -167,42 +180,26 @@ export class Tree {
     let lHeight = this.heightTree(root.left);
     let rHeight = this.heightTree(root.right);
 
-    if (root.value === value) {
-      console.log("this fired")
-      return Math.max(lHeight, rHeight) + 1;
-    }
-
     return Math.max(lHeight, rHeight) + 1;
   }
 
-  height(root = this.root, value) {
-    let height = { value: -1 }; // Using an object 
-    // to store height by reference
-    this.findHeightUtil(root, value, height);
-    return height.value;
-  }
+  height(value) { 
+    const node = this.find(value);
+    if ( node === null ) return null;
+    const height = this.heightTree(node);
 
-  findHeightUtil(root, value, height) {
-    if (!root) return -1;
-
-    // Store the maximum height of left and right subtree
-    let leftHeight = this.findHeightUtil(root.left, value, height);
-    let rightHeight = this.findHeightUtil(root.right, value, height);
-
-    // Update height of the current node
-    let ans = Math.max(leftHeight, rightHeight) + 1;
-
-    // If current node is the required node, update height
-    if (root.data === value) height.value = ans;
-
-    return ans;
+    return height
   }
 
   /*
   Write a depth(value) function that returns the depth of the node containing the 
   given value. Depth is defined as the number of edges in the path from that node 
   to the root node. If the value is not found in the tree, the function should return null.
- */
+  */
+
+  depth(value) { 
+
+  }
 
   /*
   Write an isBalanced function that checks if the tree is balanced. A binary tree is 
