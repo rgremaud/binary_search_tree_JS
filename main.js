@@ -9,6 +9,7 @@ const root = tree.root;
 tree.prettyPrint(root);
 // console.log(tree.heightTest(8));
 console.log(tree.depth(root, 6345));
+console.log(tree.isBalanced(root));
 
 // const traversal = tree.levelOrderForEach(tree.storeValue);
 // const traversalLog = tree.levelOrderForEach(value => console.log(value));
