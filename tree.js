@@ -196,13 +196,21 @@ export class Tree {
     return height
   }
 
-  /*
-  Write a depth(value) function that returns the depth of the node containing the 
-  given value. Depth is defined as the number of edges in the path from that node 
-  to the root node. If the value is not found in the tree, the function should return null.
-  */
+// doesnt work when going right
+  depth(root = this.root, value) { 
+    // check for node and return null if it doesn't exist
+    if ( this.find(value) === null ) return null;
+    if ( !root ) return -1;
 
-  depth(value) { 
+    let depth = -1;
+    
+    if (root.value === value ||
+        (depth = this.depth(root.left, value)) >= 0 ||
+        (depth = this.depth(root.right, value)) >= 0) {
+        return depth + 1;
+    }
+    
+    return depth;
 
   }
 
@@ -214,5 +222,4 @@ export class Tree {
   Write a rebalance function that rebalances an unbalanced tree. 
   Tip: You’ll want to use a traversal method to provide a new array to the buildTree function.
  */
-
 }

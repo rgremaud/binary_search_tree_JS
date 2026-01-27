@@ -8,11 +8,12 @@ const root = tree.root;
 
 tree.prettyPrint(root);
 // console.log(tree.heightTest(8));
+console.log(tree.depth(root, 6345));
 
 // const traversal = tree.levelOrderForEach(tree.storeValue);
 // const traversalLog = tree.levelOrderForEach(value => console.log(value));
 // console.log(traversal);
 
 // tree.preOrderForEach(root, value => console.log(value));
-tree.postOrderForEach(root, value => console.log(value));
+// tree.postOrderForEach(root, value => console.log(value));
 // tree.inOrderForEach(root, value => console.log(value));
