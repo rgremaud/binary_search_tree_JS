@@ -120,11 +120,11 @@ export class Tree {
 
     const levelOrderArray = [];
     const queue = [];
-    
+
     let currentNode = this.root;
     queue.push(currentNode);
 
-    while ( queue.length !== 0 ) {
+    while (queue.length !== 0) {
       callback(currentNode.value, levelOrderArray)
       if (currentNode.left !== null) {
         queue.push(currentNode.left)
@@ -132,10 +132,10 @@ export class Tree {
       if (currentNode.right !== null) {
         queue.push(currentNode.right)
       }
-      queue.splice(0,1);
+      queue.splice(0, 1);
       currentNode = queue[0];
     }
-   
+
     return levelOrderArray;
   }
 
@@ -150,53 +150,67 @@ export class Tree {
    to the provided callback. The functions should throw an Error if no callback is given as an argument, 
    like with levelOrderForEach.
    */
-  
-   /*
-   Write a height(value) function that returns the height of the node containing 
-   the given value. Height is defined as the number of edges in the longest path from 
-   that node to a leaf node. If the value is not found in the tree, the function should return null.
-  */
- // works for leaf nodes and nothing else
-  height(root, value) {
-    // returns null if value is not found in tree
-    if (this.find(value) === null) return null
 
-    // define node
-    let height = { value: -1 };
-    height = this.heightHelper(root, value, height);
+  /*
+  Write a height(value) function that returns the height of the node containing 
+  the given value. Height is defined as the number of edges in the longest path from 
+  that node to a leaf node. If the value is not found in the tree, the function should return null.
+ */
 
+  // function works for height of actual tree - not individual nodes
+  heightTree(root = this.root, value = "") {
+    if (root === null) {
+      return -1;
+    }
+
+    // compute the height of left and right subtrees
+    let lHeight = this.heightTree(root.left);
+    let rHeight = this.heightTree(root.right);
+
+    if (root.value === value) {
+      console.log("this fired")
+      return Math.max(lHeight, rHeight) + 1;
+    }
+
+    return Math.max(lHeight, rHeight) + 1;
+  }
+
+  height(root = this.root, value) {
+    let height = { value: -1 }; // Using an object 
+    // to store height by reference
+    this.findHeightUtil(root, value, height);
     return height.value;
   }
 
-  heightHelper(root, value, height) {
+  findHeightUtil(root, value, height) {
     if (!root) return -1;
 
-    // Find max height of left and right subtrees
-    let leftHeight = this.heightHelper(root.left, value, height);
-    let rightHeight = this.heightHelper(root.right, value, height);
+    // Store the maximum height of left and right subtree
+    let leftHeight = this.findHeightUtil(root.left, value, height);
+    let rightHeight = this.findHeightUtil(root.right, value, height);
 
-    let maxHeight = Math.max(leftHeight, rightHeight) + 1;
+    // Update height of the current node
+    let ans = Math.max(leftHeight, rightHeight) + 1;
 
-    if (root.value === value) { 
-      height.value = maxHeight;
-    }
+    // If current node is the required node, update height
+    if (root.data === value) height.value = ans;
 
-    return maxHeight;
+    return ans;
   }
 
-   /*
-   Write a depth(value) function that returns the depth of the node containing the 
-   given value. Depth is defined as the number of edges in the path from that node 
-   to the root node. If the value is not found in the tree, the function should return null.
-  */
+  /*
+  Write a depth(value) function that returns the depth of the node containing the 
+  given value. Depth is defined as the number of edges in the path from that node 
+  to the root node. If the value is not found in the tree, the function should return null.
+ */
 
-   /*
-   Write an isBalanced function that checks if the tree is balanced. A binary tree is 
-   considered balanced if, for every node in the tree, the height difference between its 
-   left and right subtrees is no more than 1, and both the left and right subtrees are also balanced.
-  
-   Write a rebalance function that rebalances an unbalanced tree. 
-   Tip: You’ll want to use a traversal method to provide a new array to the buildTree function.
-  */
+  /*
+  Write an isBalanced function that checks if the tree is balanced. A binary tree is 
+  considered balanced if, for every node in the tree, the height difference between its 
+  left and right subtrees is no more than 1, and both the left and right subtrees are also balanced.
+ 
+  Write a rebalance function that rebalances an unbalanced tree. 
+  Tip: You’ll want to use a traversal method to provide a new array to the buildTree function.
+ */
 
 }

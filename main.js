@@ -7,7 +7,7 @@ tree.buildTree(array);
 const root = tree.root;
 
 tree.prettyPrint(root);
-console.log(tree.height(root, 67));
+console.log(tree.height(root, 8));
 
 // const traversal = tree.levelOrderForEach(tree.storeValue);
 // console.log(traversal);
