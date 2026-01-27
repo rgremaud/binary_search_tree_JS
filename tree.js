@@ -143,44 +143,49 @@ export class Tree {
     array.push(value);
   }
 
-  /*
-  Write inOrderForEach(callback), preOrderForEach(callback), and postOrderForEach(callback) 
-  functions that also accept a callback as a parameter. Each of these functions 
-  should traverse the tree in their respective depth-first order and pass each node
-   to the provided callback. The functions should throw an Error if no callback is given as an argument, 
-   like with levelOrderForEach.
-   */
-  inOrderForEach(callback) {
+  inOrderForEach(root=this.root, callback) {
     if (typeof callback !== 'function') {
       throw new Error("Callback function required as input");
     }
+    if ( root === null ) return;
+
+    this.inOrderForEach(root.left, callback);
+    callback(root.value);
+    this.inOrderForEach(root.right, callback)
 
   }
 
-  preOrderForEach(callback) {
+  preOrderForEach(root=this.root, callback) {
     if (typeof callback !== 'function') {
       throw new Error("Callback function required as input");
     }
+    if ( root === null ) return
 
+    callback(root.value);
+    this.preOrderForEach(root.left, callback);
+    this.preOrderForEach(root.right, callback);
   }
 
-  postOrderForEach(callback) {
+  postOrderForEach(root=this.root, callback) {
     if (typeof callback !== 'function') {
       throw new Error("Callback function required as input");
     }
-    
+    if ( root === null ) return
+
+    this.postOrderForEach(root.left, callback);
+    this.postOrderForEach(root.right, callback);
+    callback(root.value);
   }
 
   heightHelper(root = this.root) {
     if (root === null) {
       return -1;
     }
-
     // compute the height of left and right subtrees
-    let lHeight = this.heightTree(root.left);
-    let rHeight = this.heightTree(root.right);
+    let leftHeight = this.heightTree(root.left);
+    let rightHeight = this.heightTree(root.right);
 
-    return Math.max(lHeight, rHeight) + 1;
+    return Math.max(leftHeight, rightHeight) + 1;
   }
 
   height(value) { 
