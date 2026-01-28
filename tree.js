@@ -196,6 +196,13 @@ export class Tree {
     return height
   }
 
+  heightNode(node) {
+    if ( node === null ) return null;
+    const height = this.heightHelper(node);
+
+    return height
+  }
+
 // doesnt work when going right
   depth(root = this.root, value) { 
     // check for node and return null if it doesn't exist
@@ -214,19 +221,14 @@ export class Tree {
     return depth;
   }
 
-  /*
-  Write an isBalanced function that checks if the tree is balanced. A binary tree is 
-  considered balanced if, for every node in the tree, the height difference between its 
-  left and right subtrees is no more than 1, and both the left and right subtrees are also balanced.
- */
   isBalanced(root = this.root) { 
     if ( root === null ) return true
 
-    const leftHeight = this.height(root.left.value);
-    const rightHeight = this.height(root.right.value);
-
+    const leftHeight = this.heightNode(root.left);
+    const rightHeight = this.heightNode(root.right);
+    const heightDifference = Math.abs(leftHeight - rightHeight);
     // check if difference between left and right is more than 1
-    if ( Math.abs(leftHeight - rightHeight) > 1 ) return false;
+    if ( heightDifference > 1 ) return false;
 
     return this.isBalanced(root.left) && this.isBalanced(root.right);
   }
@@ -235,4 +237,15 @@ export class Tree {
   Write a rebalance function that rebalances an unbalanced tree. 
   Tip: You’ll want to use a traversal method to provide a new array to the buildTree function.
  */
+  rebalance() { 
+    // traverse the tree and pull all the values
+    // create an array
+    const nodeValues = [];
+    this.levelOrderForEach(value => nodeValues.push(value));
+
+    // clear existing tree
+    this.root = null;
+    // build a new tree
+    this.buildTree(nodeValues);
+  }
 }
